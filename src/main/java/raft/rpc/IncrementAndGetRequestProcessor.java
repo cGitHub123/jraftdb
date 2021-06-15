@@ -28,7 +28,7 @@ public class IncrementAndGetRequestProcessor implements RpcProcessor<IncrementAn
             }
         };
 
-        this.sqliteService.incrementAndGet(request.getDelta(), closure);
+        this.sqliteService.execute(request.getDelta(), closure);
     }
 
     @Override

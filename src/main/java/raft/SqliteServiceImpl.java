@@ -77,7 +77,7 @@ public class SqliteServiceImpl implements SqliteService {
     }
 
     @Override
-    public void incrementAndGet(final long delta, final SqliteClosure closure) {
+    public void execute(final long delta, final SqliteClosure closure) {
         applyOperation(SqliteOperation.createIncrement(delta), closure);
     }
 

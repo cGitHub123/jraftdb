@@ -8,5 +8,5 @@ public interface SqliteService {
 
     void get(final boolean readOnlySafe, final SqliteClosure closure);
 
-    void incrementAndGet(final long delta, final SqliteClosure closure);
+    void execute(final long delta, final SqliteClosure closure);
 }
