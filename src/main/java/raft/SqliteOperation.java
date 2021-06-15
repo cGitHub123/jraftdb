@@ -6,31 +6,30 @@ import java.io.Serializable;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class CounterOperation implements Serializable {
+public class SqliteOperation implements Serializable {
 
     private static final long serialVersionUID = -6597003954824547294L;
 
-    /** Get value */
     public static final byte  GET              = 0x01;
-    /** Increment and get value */
+
     public static final byte  INCREMENT        = 0x02;
 
     private byte              op;
     private long              delta;
 
-    public static CounterOperation createGet() {
-        return new CounterOperation(GET);
+    public static SqliteOperation createGet() {
+        return new SqliteOperation(GET);
     }
 
-    public static CounterOperation createIncrement(final long delta) {
-        return new CounterOperation(INCREMENT, delta);
+    public static SqliteOperation createIncrement(final long delta) {
+        return new SqliteOperation(INCREMENT, delta);
     }
 
-    public CounterOperation(byte op) {
+    public SqliteOperation(byte op) {
         this(op, 0);
     }
 
-    public CounterOperation(byte op, long delta) {
+    public SqliteOperation(byte op, long delta) {
         this.op = op;
         this.delta = delta;
     }

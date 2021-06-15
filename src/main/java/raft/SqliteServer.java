@@ -19,14 +19,14 @@ import java.io.IOException;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class CounterServer {
+public class SqliteServer {
 
     private RaftGroupService raftGroupService;
     private Node node;
     private SqliteStateMachine fsm;
 
-    public CounterServer(final String dataPath, final String groupId, final PeerId serverId,
-                         final NodeOptions nodeOptions) throws IOException {
+    public SqliteServer(final String dataPath, final String groupId, final PeerId serverId,
+                        final NodeOptions nodeOptions) throws IOException {
         // 初始化路径
         FileUtils.forceMkdir(new File(dataPath));
 
@@ -83,9 +83,9 @@ public class CounterServer {
     public static void main(final String[] args) throws IOException {
         if (args.length != 4) {
             System.out
-                .println("Useage : java com.alipay.sofa.jraft.example.counter.CounterServer {dataPath} {groupId} {serverId} {initConf}");
+                .println("Useage : java com.alipay.sofa.jraft.example.counter.SqliteServer {dataPath} {groupId} {serverId} {initConf}");
             System.out
-                .println("Example: java com.alipay.sofa.jraft.example.counter.CounterServer /tmp/server1 counter 127.0.0.1:8081 127.0.0.1:8081,127.0.0.1:8082,127.0.0.1:8083");
+                .println("Example: java com.alipay.sofa.jraft.example.counter.SqliteServer /tmp/server1 counter 127.0.0.1:8081 127.0.0.1:8081,127.0.0.1:8082,127.0.0.1:8083");
             System.exit(1);
         }
         final String dataPath = args[0];
@@ -114,8 +114,8 @@ public class CounterServer {
         nodeOptions.setInitialConf(initConf);
 
         // 启动
-        final CounterServer counterServer = new CounterServer(dataPath, groupId, serverId, nodeOptions);
+        final SqliteServer sqliteServer = new SqliteServer(dataPath, groupId, serverId, nodeOptions);
         System.out.println("Started counter server at port:"
-                           + counterServer.getNode().getNodeId().getPeerId().getPort());
+                           + sqliteServer.getNode().getNodeId().getPeerId().getPort());
     }
 }

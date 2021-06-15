@@ -7,17 +7,17 @@ import raft.rpc.ValueResponse;
  * author caibin@58.com
  * date 2021-06-15
  */
-public abstract class CounterClosure implements Closure {
+public abstract class SqliteClosure implements Closure {
 
     private ValueResponse valueResponse;
-    private CounterOperation counterOperation;
+    private SqliteOperation sqliteOperation;
 
-    public void setCounterOperation(CounterOperation counterOperation) {
-        this.counterOperation = counterOperation;
+    public void setSqliteOperation(SqliteOperation sqliteOperation) {
+        this.sqliteOperation = sqliteOperation;
     }
 
-    public CounterOperation getCounterOperation() {
-        return counterOperation;
+    public SqliteOperation getSqliteOperation() {
+        return sqliteOperation;
     }
 
     public ValueResponse getValueResponse() {

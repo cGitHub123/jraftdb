@@ -13,7 +13,7 @@ import com.alipay.sofa.jraft.storage.snapshot.SnapshotWriter;
 import com.alipay.sofa.jraft.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import raft.snapshot.CounterSnapshotFile;
+import raft.snapshot.SqliteSnapshotFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,26 +24,18 @@ import java.util.concurrent.atomic.AtomicLong;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class CounterStateMachine extends StateMachineAdapter {
+public class SqliteStateMachine extends StateMachineAdapter {
 
-    private static final Logger LOG        = LoggerFactory.getLogger(CounterStateMachine.class);
+    private static final Logger LOG        = LoggerFactory.getLogger(SqliteStateMachine.class);
 
-    /**
-     * Counter value
-     */
     private final AtomicLong    value      = new AtomicLong(0);
-    /**
-     * Leader term
-     */
+
     private final AtomicLong    leaderTerm = new AtomicLong(-1);
 
     public boolean isLeader() {
         return this.leaderTerm.get() > 0;
     }
 
-    /**
-     * Returns current value.
-     */
     public long getValue() {
         return this.value.get();
     }
@@ -52,31 +44,31 @@ public class CounterStateMachine extends StateMachineAdapter {
     public void onApply(final Iterator iter) {
         while (iter.hasNext()) {
             long current = 0;
-            CounterOperation counterOperation = null;
+            SqliteOperation sqliteOperation = null;
 
-            CounterClosure closure = null;
+            SqliteClosure closure = null;
             if (iter.done() != null) {
                 // This task is applied by this node, get value from closure to avoid additional parsing.
-                closure = (CounterClosure) iter.done();
-                counterOperation = closure.getCounterOperation();
+                closure = (SqliteClosure) iter.done();
+                sqliteOperation = closure.getSqliteOperation();
             } else {
                 // Have to parse FetchAddRequest from this user log.
                 final ByteBuffer data = iter.getData();
                 try {
-                    counterOperation = SerializerManager.getSerializer(SerializerManager.Hessian2).deserialize(
-                        data.array(), CounterOperation.class.getName());
+                    sqliteOperation = SerializerManager.getSerializer(SerializerManager.Hessian2).deserialize(
+                        data.array(), SqliteOperation.class.getName());
                 } catch (final CodecException e) {
                     LOG.error("Fail to decode IncrementAndGetRequest", e);
                 }
             }
-            if (counterOperation != null) {
-                switch (counterOperation.getOp()) {
-                    case CounterOperation.GET:
+            if (sqliteOperation != null) {
+                switch (sqliteOperation.getOp()) {
+                    case SqliteOperation.GET:
                         current = this.value.get();
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
-                    case CounterOperation.INCREMENT:
-                        final long delta = counterOperation.getDelta();
+                    case SqliteOperation.INCREMENT:
+                        final long delta = sqliteOperation.getDelta();
                         final long prev = this.value.get();
                         current = this.value.addAndGet(delta);
                         LOG.info("Added value={} by delta={} at logIndex={}", prev, delta, iter.getIndex());
@@ -96,7 +88,7 @@ public class CounterStateMachine extends StateMachineAdapter {
   public void onSnapshotSave(final SnapshotWriter writer, final Closure done) {
     final long currVal = this.value.get();
     Utils.runInThread(() -> {
-      final CounterSnapshotFile snapshot = new CounterSnapshotFile(writer.getPath() + File.separator + "data");
+      final SqliteSnapshotFile snapshot = new SqliteSnapshotFile(writer.getPath() + File.separator + "data");
       if (snapshot.save(currVal)) {
         if (writer.addFile("data")) {
           done.run(Status.OK());
@@ -124,7 +116,7 @@ public class CounterStateMachine extends StateMachineAdapter {
             LOG.error("Fail to find data file in {}", reader.getPath());
             return false;
         }
-        final CounterSnapshotFile snapshot = new CounterSnapshotFile(reader.getPath() + File.separator + "data");
+        final SqliteSnapshotFile snapshot = new SqliteSnapshotFile(reader.getPath() + File.separator + "data");
         try {
             this.value.set(snapshot.load());
             return true;

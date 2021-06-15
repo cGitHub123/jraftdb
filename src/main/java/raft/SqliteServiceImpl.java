@@ -20,14 +20,14 @@ import java.util.concurrent.Executor;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class CounterServiceImpl implements CounterService {
-    private static final Logger LOG = LoggerFactory.getLogger(CounterServiceImpl.class);
+public class SqliteServiceImpl implements SqliteService {
+    private static final Logger LOG = LoggerFactory.getLogger(SqliteServiceImpl.class);
 
-    private final CounterServer counterServer;
+    private final SqliteServer sqliteServer;
     private final Executor      readIndexExecutor;
 
-    public CounterServiceImpl(CounterServer counterServer) {
-        this.counterServer = counterServer;
+    public SqliteServiceImpl(SqliteServer sqliteServer) {
+        this.sqliteServer = sqliteServer;
         this.readIndexExecutor = createReadIndexExecutor();
     }
 
@@ -37,14 +37,14 @@ public class CounterServiceImpl implements CounterService {
     }
 
     @Override
-    public void get(final boolean readOnlySafe, final CounterClosure closure) {
+    public void get(final boolean readOnlySafe, final SqliteClosure closure) {
         if(!readOnlySafe){
             closure.success(getValue());
             closure.run(Status.OK());
             return;
         }
 
-        this.counterServer.getNode().readIndex(BytesUtil.EMPTY_BYTES, new ReadIndexClosure() {
+        this.sqliteServer.getNode().readIndex(BytesUtil.EMPTY_BYTES, new ReadIndexClosure() {
             @Override
             public void run(Status status, long index, byte[] reqCtx) {
                 if(status.isOk()){
@@ -52,10 +52,10 @@ public class CounterServiceImpl implements CounterService {
                     closure.run(Status.OK());
                     return;
                 }
-                CounterServiceImpl.this.readIndexExecutor.execute(() -> {
+                SqliteServiceImpl.this.readIndexExecutor.execute(() -> {
                     if(isLeader()){
                         LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
-                        applyOperation(CounterOperation.createGet(), closure);
+                        applyOperation(SqliteOperation.createGet(), closure);
                     }else {
                         handlerNotLeaderError(closure);
                     }
@@ -65,43 +65,43 @@ public class CounterServiceImpl implements CounterService {
     }
 
     private boolean isLeader() {
-        return this.counterServer.getFsm().isLeader();
+        return this.sqliteServer.getFsm().isLeader();
     }
 
     private long getValue() {
-        return this.counterServer.getFsm().getValue();
+        return this.sqliteServer.getFsm().getValue();
     }
 
     private String getRedirect() {
-        return this.counterServer.redirect().getRedirect();
+        return this.sqliteServer.redirect().getRedirect();
     }
 
     @Override
-    public void incrementAndGet(final long delta, final CounterClosure closure) {
-        applyOperation(CounterOperation.createIncrement(delta), closure);
+    public void incrementAndGet(final long delta, final SqliteClosure closure) {
+        applyOperation(SqliteOperation.createIncrement(delta), closure);
     }
 
-    private void applyOperation(final CounterOperation op, final CounterClosure closure) {
+    private void applyOperation(final SqliteOperation op, final SqliteClosure closure) {
         if (!isLeader()) {
             handlerNotLeaderError(closure);
             return;
         }
 
         try {
-            closure.setCounterOperation(op);
+            closure.setSqliteOperation(op);
             final Task task = new Task();
             task.setData(ByteBuffer.wrap(SerializerManager.getSerializer(SerializerManager.Hessian2).serialize(op)));
             task.setDone(closure);
-            this.counterServer.getNode().apply(task);
+            this.sqliteServer.getNode().apply(task);
         } catch (CodecException e) {
-            String errorMsg = "Fail to encode CounterOperation";
+            String errorMsg = "Fail to encode SqliteOperation";
             LOG.error(errorMsg, e);
             closure.failure(errorMsg, StringUtils.EMPTY);
             closure.run(new Status(RaftError.EINTERNAL, errorMsg));
         }
     }
 
-    private void handlerNotLeaderError(final CounterClosure closure) {
+    private void handlerNotLeaderError(final SqliteClosure closure) {
         closure.failure("Not leader.", getRedirect());
         closure.run(new Status(RaftError.EPERM, "Not leader"));
     }

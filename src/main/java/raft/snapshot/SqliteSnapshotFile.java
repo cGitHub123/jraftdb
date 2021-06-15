@@ -12,13 +12,13 @@ import java.io.IOException;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class CounterSnapshotFile {
+public class SqliteSnapshotFile {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CounterSnapshotFile.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SqliteSnapshotFile.class);
 
     private String              path;
 
-    public CounterSnapshotFile(String path) {
+    public SqliteSnapshotFile(String path) {
         super();
         this.path = path;
     }
@@ -27,9 +27,6 @@ public class CounterSnapshotFile {
         return this.path;
     }
 
-    /**
-     * Save value to snapshot file.
-     */
     public boolean save(final long value) {
         try {
             FileUtils.writeStringToFile(new File(path), String.valueOf(value));
