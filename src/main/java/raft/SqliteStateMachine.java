@@ -14,6 +14,7 @@ import com.alipay.sofa.jraft.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raft.snapshot.SqliteSnapshotFile;
+import sqlite.SqliteHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,14 +65,11 @@ public class SqliteStateMachine extends StateMachineAdapter {
             if (sqliteOperation != null) {
                 switch (sqliteOperation.getOp()) {
                     case SqliteOperation.GET:
-                        current = this.value.get();
+                        SqliteHelper.query(sqliteOperation.getSql());
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
                     case SqliteOperation.INCREMENT:
-                        final long delta = sqliteOperation.getDelta();
-                        final long prev = this.value.get();
-                        current = this.value.addAndGet(delta);
-                        LOG.info("Added value={} by delta={} at logIndex={}", prev, delta, iter.getIndex());
+                        SqliteHelper.execute(sqliteOperation.getSql());
                         break;
                 }
 

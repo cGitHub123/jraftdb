@@ -16,6 +16,7 @@ public class SqliteOperation implements Serializable {
 
     private byte              op;
     private long              delta;
+    private String sql;
 
     public static SqliteOperation createGet() {
         return new SqliteOperation(GET);
@@ -40,5 +41,13 @@ public class SqliteOperation implements Serializable {
 
     public long getDelta() {
         return delta;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 }
