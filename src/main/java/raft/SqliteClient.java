@@ -7,6 +7,7 @@ import com.alipay.sofa.jraft.error.RemotingException;
 import com.alipay.sofa.jraft.option.CliOptions;
 import com.alipay.sofa.jraft.rpc.InvokeCallback;
 import com.alipay.sofa.jraft.rpc.impl.cli.CliClientServiceImpl;
+import raft.rpc.GetValueRequest;
 import raft.rpc.IncrementAndGetRequest;
 
 import java.util.concurrent.CountDownLatch;

@@ -78,7 +78,7 @@ public class SqliteStateMachine extends StateMachineAdapter {
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
                     case SqliteOperation.INCREMENT:
-                        SqliteHelper.execute(sqliteOperation.getSql());
+                        SqliteHelper.execute("create table person (id integer, name string)");
                         break;
                 }
 
