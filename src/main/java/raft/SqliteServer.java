@@ -11,6 +11,7 @@ import raft.rpc.GetValueRequestProcessor;
 import raft.rpc.IncrementAndGetRequestProcessor;
 import raft.rpc.ValueResponse;
 import org.apache.commons.io.FileUtils;
+import sqlite.SqliteHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,7 +93,7 @@ public class SqliteServer {
         final String groupId = args[1];
         final String serverIdStr = args[2];
         final String initConfStr = args[3];
-
+        final String dbName = args[4];
         final NodeOptions nodeOptions = new NodeOptions();
         // 为了测试,调整 snapshot 间隔等参数
         // 设置选举超时时间为 1 秒

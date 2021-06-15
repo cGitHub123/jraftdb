@@ -19,6 +19,7 @@ import sqlite.SqliteHelper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.sql.ResultSet;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -65,7 +66,15 @@ public class SqliteStateMachine extends StateMachineAdapter {
             if (sqliteOperation != null) {
                 switch (sqliteOperation.getOp()) {
                     case SqliteOperation.GET:
-                        SqliteHelper.query(sqliteOperation.getSql());
+                        ResultSet rs = SqliteHelper.query(sqliteOperation.getSql());
+                        try {
+                            while (rs.next()) {
+                                // read the result set
+                                System.out.println("id = " + rs.getInt("id"));
+                            }
+                        } catch (Exception ex) {
+
+                        }
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
                     case SqliteOperation.INCREMENT:
