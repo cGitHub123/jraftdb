@@ -65,7 +65,7 @@ public class SqliteStateMachine extends StateMachineAdapter {
             }
             if (sqliteOperation != null) {
                 switch (sqliteOperation.getOp()) {
-                    case SqliteOperation.GET:
+                    case SqliteOperation.QUERY:
                         ResultSet rs = SqliteHelper.query(sqliteOperation.getSql());
                         try {
                             while (rs.next()) {
@@ -77,7 +77,7 @@ public class SqliteStateMachine extends StateMachineAdapter {
                         }
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
-                    case SqliteOperation.INCREMENT:
+                    case SqliteOperation.EXECUTE:
                         SqliteHelper.execute("create table person (id integer, name string)");
                         break;
                 }

@@ -12,11 +12,21 @@ public class IncrementAndGetRequest implements Serializable {
 
     private long              delta;
 
+    private String sql;
+
     public long getDelta() {
         return this.delta;
     }
 
     public void setDelta(long delta) {
         this.delta = delta;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 }

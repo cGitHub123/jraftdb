@@ -44,33 +44,24 @@ public class SqliteClient {
         }
 
         final PeerId leader = RouteTable.getInstance().selectLeader(groupId);
-        System.out.println("Leader is " + leader);
-        final int n = 1000;
-        final CountDownLatch latch = new CountDownLatch(n);
-        final long start = System.currentTimeMillis();
-        for (int i = 0; i < n; i++) {
-            incrementAndGet(cliClientService, leader, i, latch);
-        }
-        latch.await();
-        System.out.println(n + " ops, cost : " + (System.currentTimeMillis() - start) + " ms.");
+        doRequest(cliClientService, leader);
         System.exit(0);
     }
 
-    private static void incrementAndGet(final CliClientServiceImpl cliClientService, final PeerId leader,
-                                        final long delta, CountDownLatch latch) throws RemotingException,
+    private static void doRequest(final CliClientServiceImpl cliClientService, final PeerId leader) throws RemotingException,
                                                                                InterruptedException {
         final IncrementAndGetRequest request = new IncrementAndGetRequest();
-        request.setDelta(delta);
+        request.setDelta(1);
+        String sql = new String();
+        request.setSql(sql);
         cliClientService.getRpcClient().invokeAsync(leader.getEndpoint(), request, new InvokeCallback() {
 
             @Override
             public void complete(Object result, Throwable err) {
                 if (err == null) {
-                    latch.countDown();
                     System.out.println("incrementAndGet result:" + result);
                 } else {
                     err.printStackTrace();
-                    latch.countDown();
                 }
             }
 
