@@ -83,10 +83,7 @@ public class SqliteServer {
 
     public static void main(final String[] args) throws IOException {
         if (args.length != 5) {
-            System.out
-                .println("Useage : java com.alipay.sofa.jraft.example.counter.SqliteServer {dataPath} {groupId} {serverId} {initConf}");
-            System.out
-                .println("Example: java com.alipay.sofa.jraft.example.counter.SqliteServer /tmp/server1 counter 127.0.0.1:8081 127.0.0.1:8081,127.0.0.1:8082,127.0.0.1:8083");
+            System.out.println("args is not 5");
             System.exit(1);
         }
         final String dataPath = args[0];
@@ -113,10 +110,8 @@ public class SqliteServer {
         }
         // 设置初始集群配置
         nodeOptions.setInitialConf(initConf);
-
         // 启动
         final SqliteServer sqliteServer = new SqliteServer(dataPath, groupId, serverId, nodeOptions);
-        System.out.println("Started counter server at port:"
-                           + sqliteServer.getNode().getNodeId().getPeerId().getPort());
+        System.out.println("Started counter server at port:" + sqliteServer.getNode().getNodeId().getPeerId().getPort());
     }
 }
