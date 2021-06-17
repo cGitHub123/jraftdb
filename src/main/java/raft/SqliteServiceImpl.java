@@ -37,7 +37,7 @@ public class SqliteServiceImpl implements SqliteService {
     }
 
     @Override
-    public void get(final boolean readOnlySafe, final SqliteClosure closure) {
+    public void query(final boolean readOnlySafe, final SqliteClosure closure) {
         if(!readOnlySafe){
             closure.success(getValue());
             closure.run(Status.OK());
@@ -77,8 +77,8 @@ public class SqliteServiceImpl implements SqliteService {
     }
 
     @Override
-    public void execute(final long delta, final SqliteClosure closure) {
-        applyOperation(SqliteOperation.createIncrement(delta), closure);
+    public void execute(final SqliteClosure closure) {
+        applyOperation(SqliteOperation.createIncrement(), closure);
     }
 
     private void applyOperation(final SqliteOperation op, final SqliteClosure closure) {

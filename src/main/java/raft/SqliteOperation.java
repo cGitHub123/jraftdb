@@ -15,15 +15,14 @@ public class SqliteOperation implements Serializable {
     public static final byte  EXECUTE        = 0x02;
 
     private byte              op;
-    private long              delta;
     private String sql;
 
     public static SqliteOperation createGet() {
         return new SqliteOperation(QUERY);
     }
 
-    public static SqliteOperation createIncrement(final long delta) {
-        return new SqliteOperation(EXECUTE, delta);
+    public static SqliteOperation createIncrement() {
+        return new SqliteOperation(EXECUTE);
     }
 
     public SqliteOperation(byte op) {
@@ -32,15 +31,10 @@ public class SqliteOperation implements Serializable {
 
     public SqliteOperation(byte op, long delta) {
         this.op = op;
-        this.delta = delta;
     }
 
     public byte getOp() {
         return op;
-    }
-
-    public long getDelta() {
-        return delta;
     }
 
     public String getSql() {

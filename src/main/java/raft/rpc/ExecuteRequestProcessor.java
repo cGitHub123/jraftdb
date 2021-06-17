@@ -10,28 +10,29 @@ import raft.SqliteService;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class GetValueRequestProcessor implements RpcProcessor<GetValueRequest> {
+public class ExecuteRequestProcessor implements RpcProcessor<ExecuteRequest> {
 
     private final SqliteService sqliteService;
 
-    public GetValueRequestProcessor(SqliteService sqliteService) {
+    public ExecuteRequestProcessor(SqliteService sqliteService) {
         super();
         this.sqliteService = sqliteService;
     }
 
     @Override
-    public void handleRequest(final RpcContext rpcCtx, final GetValueRequest request) {
+    public void handleRequest(final RpcContext rpcCtx, final ExecuteRequest request) {
         final SqliteClosure closure = new SqliteClosure() {
             @Override
             public void run(Status status) {
                 rpcCtx.sendResponse(getValueResponse());
             }
         };
-        this.sqliteService.get(request.isReadOnlySafe(), closure);
+
+        this.sqliteService.execute(closure);
     }
 
     @Override
     public String interest() {
-        return GetValueRequest.class.getName();
+        return ExecuteRequest.class.getName();
     }
 }
