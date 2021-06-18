@@ -9,6 +9,7 @@ import com.alipay.sofa.jraft.rpc.InvokeCallback;
 import com.alipay.sofa.jraft.rpc.impl.cli.CliClientServiceImpl;
 import raft.rpc.ExecuteRequest;
 
+import java.util.Scanner;
 import java.util.concurrent.Executor;
 
 /**
@@ -20,8 +21,7 @@ public class SqliteClient {
     public static void main(final String[] args) throws Exception {
         if (args.length != 2) {
             System.out.println("Useage : java com.alipay.sofa.jraft.example.counter.SqliteClient {groupId} {conf}");
-            System.out
-                .println("Example: java com.alipay.sofa.jraft.example.counter.SqliteClient counter 127.0.0.1:8081,127.0.0.1:8082,127.0.0.1:8083");
+            System.out.println("Example: java com.alipay.sofa.jraft.example.counter.SqliteClient counter 127.0.0.1:8081,127.0.0.1:8082,127.0.0.1:8083");
             System.exit(1);
         }
         final String groupId = args[0];
@@ -42,14 +42,14 @@ public class SqliteClient {
         }
 
         final PeerId leader = RouteTable.getInstance().selectLeader(groupId);
-        doRequest(cliClientService, leader);
+        GetReadLine(cliClientService, leader);
         System.exit(0);
+
     }
 
-    private static void doRequest(final CliClientServiceImpl cliClientService, final PeerId leader) throws RemotingException,
-                                                                               InterruptedException {
+    private static void doRequest(final CliClientServiceImpl cliClientService, final PeerId leader, final String sql) throws RemotingException,
+            InterruptedException {
         final ExecuteRequest request = new ExecuteRequest();
-        String sql = new String();
         request.setSql(sql);
         cliClientService.getRpcClient().invokeAsync(leader.getEndpoint(), request, new InvokeCallback() {
 
@@ -69,4 +69,15 @@ public class SqliteClient {
         }, 5000);
     }
 
+    private static void GetReadLine(final CliClientServiceImpl cliClientService, final PeerId leader) {
+        Scanner scanner = new Scanner(System.in);
+        String sql = scanner.nextLine();
+        while (true) {
+            try {
+                doRequest(cliClientService, leader, sql);
+            } catch (Exception ex) {
+
+            }
+        }
+    }
 }
