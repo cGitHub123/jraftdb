@@ -13,6 +13,8 @@
         <module>bin-dao</module>
         <module>bin-proxy</module>
         <module>bin-store</module>
+        <module>bin-metadata</module>
+        <module>bin-jdbc</module>
     </modules>
 
     <properties>
