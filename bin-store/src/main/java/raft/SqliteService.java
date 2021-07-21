@@ -6,7 +6,7 @@ package raft;
  */
 public interface SqliteService {
 
-    void query(final boolean readOnlySafe, final SqliteClosure closure);
+    void get(final boolean readOnlySafe, final SqliteClosure closure);
 
-    void execute(final SqliteClosure closure);
+    void put(final SqliteClosure closure);
 }

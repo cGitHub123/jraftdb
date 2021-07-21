@@ -28,7 +28,7 @@ public class GetProcessor implements RpcProcessor<GetRequest> {
                 rpcCtx.sendResponse(getValueResponse());
             }
         };
-        this.sqliteService.query(request.isReadOnlySafe(), closure);
+        this.sqliteService.get(request.isReadOnlySafe(), closure);
     }
 
     @Override
