@@ -1,12 +1,12 @@
-package rocks4j.core;
+package api.core;
 
-import rocks4j.core.exception.DeleteAllFailedException;
-import rocks4j.core.exception.DeleteFailedException;
-import rocks4j.core.exception.FindFailedException;
-import rocks4j.core.exception.SaveFailedException;
-import rocks4j.mapper.exception.SerDeException;
-import rocks4j.mapper.exception.SerializationException;
-import rocks4j.mapper.exception.DeserializationException;
+import api.core.exception.DeleteAllFailedException;
+import api.core.exception.DeleteFailedException;
+import api.core.exception.FindFailedException;
+import api.core.exception.SaveFailedException;
+import api.mapper.exception.SerDeException;
+import api.mapper.exception.SerializationException;
+import api.mapper.exception.DeserializationException;
 
 import java.util.Collection;
 import java.util.Optional;

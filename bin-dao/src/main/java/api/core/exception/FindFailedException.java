@@ -1,18 +1,16 @@
-package rocks4j.mapper.exception;
-
-import java.io.IOException;
+package api.core.exception;
 
 /**
  * author caibin
  * date 2021-07-15
  */
-public abstract class SerDeException extends IOException {
+public final class FindFailedException extends RocksIOException {
 
-    public SerDeException(final String message) {
+    public FindFailedException(final String message) {
         super(message);
     }
 
-    public SerDeException(
+    public FindFailedException(
             final String message,
             final Throwable throwable
     ) {

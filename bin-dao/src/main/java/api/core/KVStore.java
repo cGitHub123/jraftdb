@@ -1,19 +1,19 @@
-package rocks4j.core;
+package api.core;
 
 
 import org.rocksdb.RocksDBException;
 import org.rocksdb.RocksIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rocks4j.core.exception.DeleteAllFailedException;
-import rocks4j.core.exception.DeleteFailedException;
-import rocks4j.core.exception.FindFailedException;
-import rocks4j.core.exception.SaveFailedException;
-import rocks4j.mapper.Mapper;
-import rocks4j.mapper.MapperFactory;
-import rocks4j.mapper.exception.DeserializationException;
-import rocks4j.mapper.exception.SerDeException;
-import rocks4j.mapper.exception.SerializationException;
+import api.core.exception.DeleteAllFailedException;
+import api.core.exception.DeleteFailedException;
+import api.core.exception.FindFailedException;
+import api.core.exception.SaveFailedException;
+import api.mapper.Mapper;
+import api.mapper.MapperFactory;
+import api.mapper.exception.DeserializationException;
+import api.mapper.exception.SerDeException;
+import api.mapper.exception.SerializationException;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -34,7 +34,6 @@ public class KVStore<K, V> extends RocksDBConnection implements KeyValueStore<K,
 
     /**
      * Default constructor which automatically infers key and value types needed for mapper creation.
-     * Uses {@link JsonMapper}.
      *
      * @param configuration for {@link RocksDBConnection}.
      */

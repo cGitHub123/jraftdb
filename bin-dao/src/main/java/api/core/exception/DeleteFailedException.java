@@ -1,16 +1,16 @@
-package rocks4j.core.exception;
+package api.core.exception;
 
 /**
  * author caibin
  * date 2021-07-15
  */
-public final class SaveFailedException extends RocksIOException {
+public final class DeleteFailedException extends RocksIOException {
 
-    public SaveFailedException(final String message) {
+    public DeleteFailedException(final String message) {
         super(message);
     }
 
-    public SaveFailedException(
+    public DeleteFailedException(
             final String message,
             final Throwable throwable
     ) {

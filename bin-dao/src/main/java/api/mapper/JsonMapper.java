@@ -1,10 +1,10 @@
 
-package rocks4j.mapper;
+package api.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import rocks4j.mapper.exception.DeserializationException;
-import rocks4j.mapper.exception.SerializationException;
+import api.mapper.exception.DeserializationException;
+import api.mapper.exception.SerializationException;
 
 import java.io.IOException;
 

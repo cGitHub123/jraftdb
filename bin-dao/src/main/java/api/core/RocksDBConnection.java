@@ -1,4 +1,4 @@
-package rocks4j.core;
+package api.core;
 
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;

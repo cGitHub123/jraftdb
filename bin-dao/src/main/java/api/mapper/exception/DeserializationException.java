@@ -1,16 +1,16 @@
-package rocks4j.core.exception;
+package api.mapper.exception;
 
 /**
  * author caibin
  * date 2021-07-15
  */
-public abstract class RocksIOException extends Exception {
+public final class DeserializationException extends SerDeException {
 
-    public RocksIOException(final String message) {
+    public DeserializationException(final String message) {
         super(message);
     }
 
-    public RocksIOException(
+    public DeserializationException(
             final String message,
             final Throwable throwable
     ) {

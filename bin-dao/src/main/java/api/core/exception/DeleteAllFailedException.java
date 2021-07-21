@@ -1,16 +1,16 @@
-package rocks4j.mapper.exception;
+package api.core.exception;
 
 /**
  * author caibin
  * date 2021-07-15
  */
-public final class SerializationException extends SerDeException {
+public final class DeleteAllFailedException extends RocksIOException {
 
-    public SerializationException(final String message) {
+    public DeleteAllFailedException(final String message) {
         super(message);
     }
 
-    public SerializationException(
+    public DeleteAllFailedException(
             final String message,
             final Throwable throwable
     ) {

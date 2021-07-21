@@ -1,12 +1,12 @@
-package rocks4j;
+package api;
 
 
-import rocks4j.core.AsyncKVStore;
-import rocks4j.core.RocksDBConfiguration;
-import rocks4j.core.exception.DeleteAllFailedException;
-import rocks4j.core.exception.FindFailedException;
-import rocks4j.core.exception.SaveFailedException;
-import rocks4j.mapper.exception.SerDeException;
+import api.core.AsyncKVStore;
+import api.core.RocksDBConfiguration;
+import api.core.exception.DeleteAllFailedException;
+import api.core.exception.FindFailedException;
+import api.core.exception.SaveFailedException;
+import api.mapper.exception.SerDeException;
 
 import java.util.ArrayList;
 import java.util.List;
