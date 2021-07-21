@@ -7,10 +7,10 @@ import com.alipay.sofa.jraft.entity.PeerId;
 import com.alipay.sofa.jraft.option.NodeOptions;
 import com.alipay.sofa.jraft.rpc.RaftRpcServerFactory;
 import com.alipay.sofa.jraft.rpc.RpcServer;
-import raft.rpc.QueryProcessor;
-import raft.rpc.ExecuteRequestProcessor;
-import raft.rpc.ValueResponse;
 import org.apache.commons.io.FileUtils;
+import raft.rpc.ExecuteRequestProcessor;
+import raft.rpc.QueryProcessor;
+import raft.rpc.ValueResponse;
 import sqlite.SqliteHelper;
 
 import java.io.File;
