@@ -8,8 +8,8 @@ import com.alipay.sofa.jraft.option.NodeOptions;
 import com.alipay.sofa.jraft.rpc.RaftRpcServerFactory;
 import com.alipay.sofa.jraft.rpc.RpcServer;
 import org.apache.commons.io.FileUtils;
-import raft.rpc.ExecuteRequestProcessor;
-import raft.rpc.QueryProcessor;
+import raft.rpc.PutProcessor;
+import raft.rpc.GetProcessor;
 import raft.rpc.ValueResponse;
 import sqlite.SqliteHelper;
 
@@ -35,8 +35,8 @@ public class SqliteServer {
         final RpcServer rpcServer = RaftRpcServerFactory.createRaftRpcServer(serverId.getEndpoint());
         // 注册业务处理器
         SqliteService sqliteService = new SqliteServiceImpl(this);
-        rpcServer.registerProcessor(new QueryProcessor(sqliteService));
-        rpcServer.registerProcessor(new ExecuteRequestProcessor(sqliteService));
+        rpcServer.registerProcessor(new GetProcessor(sqliteService));
+        rpcServer.registerProcessor(new PutProcessor(sqliteService));
         // 初始化状态机
         this.fsm = new SqliteStateMachine();
         // 设置状态机到启动参数

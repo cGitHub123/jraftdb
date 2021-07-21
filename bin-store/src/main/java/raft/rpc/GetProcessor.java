@@ -11,11 +11,11 @@ import raft.SqliteService;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class QueryProcessor implements RpcProcessor<QueryRequest> {
+public class GetProcessor implements RpcProcessor<QueryRequest> {
 
     private final SqliteService sqliteService;
 
-    public QueryProcessor(SqliteService sqliteService) {
+    public GetProcessor(SqliteService sqliteService) {
         super();
         this.sqliteService = sqliteService;
     }
