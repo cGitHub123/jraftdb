@@ -1,5 +1,3 @@
-package raft.rpc;
-
 import java.io.Serializable;
 
 /**
