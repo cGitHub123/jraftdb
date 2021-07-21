@@ -11,11 +11,12 @@
 
     <modules>
         <module>bin-dao</module>
+        <module>bin-rpc</module>
         <module>bin-proxy</module>
         <module>bin-store</module>
         <module>bin-metadata</module>
         <module>bin-jdbc</module>
-        <module>bin-rpc</module>
+
     </modules>
 
     <properties>

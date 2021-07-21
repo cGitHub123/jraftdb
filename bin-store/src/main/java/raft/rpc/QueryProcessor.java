@@ -2,6 +2,8 @@ package raft.rpc;
 
 import com.alipay.sofa.jraft.Status;
 import com.alipay.sofa.jraft.rpc.RpcContext;
+import com.alipay.sofa.jraft.rpc.RpcProcessor;
+import module.QueryRequest;
 import raft.SqliteClosure;
 import raft.SqliteService;
 

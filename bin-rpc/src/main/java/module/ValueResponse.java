@@ -1,3 +1,5 @@
+package module;
+
 import java.io.Serializable;
 
 /**
@@ -61,7 +63,7 @@ public class ValueResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "ValueResponse [value=" + this.value + ", success=" + this.success + ", redirect=" + this.redirect
+        return "module.ValueResponse [value=" + this.value + ", success=" + this.success + ", redirect=" + this.redirect
                + ", errorMsg=" + this.errorMsg + "]";
     }
 
