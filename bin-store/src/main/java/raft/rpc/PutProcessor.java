@@ -3,7 +3,7 @@ package raft.rpc;
 import com.alipay.sofa.jraft.Status;
 import com.alipay.sofa.jraft.rpc.RpcContext;
 import com.alipay.sofa.jraft.rpc.RpcProcessor;
-import module.ExecuteRequest;
+import module.PutRequest;
 import raft.SqliteClosure;
 import raft.SqliteService;
 
@@ -11,7 +11,7 @@ import raft.SqliteService;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class PutProcessor implements RpcProcessor<ExecuteRequest> {
+public class PutProcessor implements RpcProcessor<PutRequest> {
 
     private final SqliteService sqliteService;
 
@@ -21,7 +21,7 @@ public class PutProcessor implements RpcProcessor<ExecuteRequest> {
     }
 
     @Override
-    public void handleRequest(final RpcContext rpcCtx, final ExecuteRequest request) {
+    public void handleRequest(final RpcContext rpcCtx, final PutRequest request) {
         final SqliteClosure closure = new SqliteClosure() {
             @Override
             public void run(Status status) {
@@ -34,6 +34,6 @@ public class PutProcessor implements RpcProcessor<ExecuteRequest> {
 
     @Override
     public String interest() {
-        return ExecuteRequest.class.getName();
+        return PutRequest.class.getName();
     }
 }

@@ -3,7 +3,8 @@ package raft.rpc;
 import com.alipay.sofa.jraft.Status;
 import com.alipay.sofa.jraft.rpc.RpcContext;
 import com.alipay.sofa.jraft.rpc.RpcProcessor;
-import module.QueryRequest;
+import module.DelRequest;
+import module.GetRequest;
 import raft.SqliteClosure;
 import raft.SqliteService;
 
@@ -11,7 +12,7 @@ import raft.SqliteService;
  * @Author: caibin
  * @Date: 2021/7/22
  */
-public class DelProcessor implements RpcProcessor<QueryRequest> {
+public class DelProcessor implements RpcProcessor<DelRequest> {
 
     private final SqliteService sqliteService;
 
@@ -21,7 +22,7 @@ public class DelProcessor implements RpcProcessor<QueryRequest> {
     }
 
     @Override
-    public void handleRequest(final RpcContext rpcCtx, final QueryRequest request) {
+    public void handleRequest(final RpcContext rpcCtx, final DelRequest request) {
         final SqliteClosure closure = new SqliteClosure() {
             @Override
             public void run(Status status) {
@@ -33,7 +34,7 @@ public class DelProcessor implements RpcProcessor<QueryRequest> {
 
     @Override
     public String interest() {
-        return QueryRequest.class.getName();
+        return GetRequest.class.getName();
     }
 
 }

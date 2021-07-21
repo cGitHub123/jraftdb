@@ -6,7 +6,7 @@ import java.io.Serializable;
  * author caibin@58.com
  * date 2021-06-15
  */
-public class ExecuteRequest implements Serializable {
+public class PutRequest implements Serializable {
 
     private static final long serialVersionUID = -5623664785560971849L;
 

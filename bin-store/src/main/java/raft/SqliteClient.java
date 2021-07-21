@@ -7,7 +7,7 @@ import com.alipay.sofa.jraft.error.RemotingException;
 import com.alipay.sofa.jraft.option.CliOptions;
 import com.alipay.sofa.jraft.rpc.InvokeCallback;
 import com.alipay.sofa.jraft.rpc.impl.cli.CliClientServiceImpl;
-import module.ExecuteRequest;
+import module.PutRequest;
 
 import java.util.Scanner;
 import java.util.concurrent.Executor;
@@ -49,7 +49,7 @@ public class SqliteClient {
 
     private static void doRequest(final CliClientServiceImpl cliClientService, final PeerId leader, final String sql) throws RemotingException,
             InterruptedException {
-        final ExecuteRequest request = new ExecuteRequest();
+        final PutRequest request = new PutRequest();
         request.setSql(sql);
         cliClientService.getRpcClient().invokeAsync(leader.getEndpoint(), request, new InvokeCallback() {
 
