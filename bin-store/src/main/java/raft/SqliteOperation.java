@@ -10,19 +10,19 @@ public class SqliteOperation implements Serializable {
 
     private static final long serialVersionUID = -6597003954824547294L;
 
-    public static final byte  QUERY              = 0x01;
+    public static final byte  GET          = 0x01;
 
-    public static final byte  EXECUTE        = 0x02;
+    public static final byte  SET        = 0x02;
 
     private byte              op;
     private String sql;
 
     public static SqliteOperation createGet() {
-        return new SqliteOperation(QUERY);
+        return new SqliteOperation(GET);
     }
 
     public static SqliteOperation createIncrement() {
-        return new SqliteOperation(EXECUTE);
+        return new SqliteOperation(SET);
     }
 
     public SqliteOperation(byte op) {

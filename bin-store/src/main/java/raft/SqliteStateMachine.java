@@ -65,11 +65,10 @@ public class SqliteStateMachine extends StateMachineAdapter {
             }
             if (sqliteOperation != null) {
                 switch (sqliteOperation.getOp()) {
-                    case SqliteOperation.QUERY:
+                    case SqliteOperation.GET:
                         ResultSet rs = SqliteHelper.query(sqliteOperation.getSql());
                         try {
                             while (rs.next()) {
-                                // read the result set
                                 System.out.println("id = " + rs.getInt("id"));
                             }
                         } catch (Exception ex) {
@@ -77,7 +76,7 @@ public class SqliteStateMachine extends StateMachineAdapter {
                         }
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
-                    case SqliteOperation.EXECUTE:
+                    case SqliteOperation.SET:
                         SqliteHelper.execute(sqliteOperation.getSql());
                         break;
                 }
