@@ -19,7 +19,8 @@ import sqlite.SqliteHelper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.sql.ResultSet;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -28,11 +29,11 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class SqliteStateMachine extends StateMachineAdapter {
 
-    private static final Logger LOG        = LoggerFactory.getLogger(SqliteStateMachine.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SqliteStateMachine.class);
 
-    private final AtomicLong    value      = new AtomicLong(0);
+    private final AtomicLong value = new AtomicLong(0);
 
-    private final AtomicLong    leaderTerm = new AtomicLong(-1);
+    private final AtomicLong leaderTerm = new AtomicLong(-1);
 
     public boolean isLeader() {
         return this.leaderTerm.get() > 0;
@@ -58,7 +59,7 @@ public class SqliteStateMachine extends StateMachineAdapter {
                 final ByteBuffer data = iter.getData();
                 try {
                     sqliteOperation = SerializerManager.getSerializer(SerializerManager.Hessian2).deserialize(
-                        data.array(), SqliteOperation.class.getName());
+                            data.array(), SqliteOperation.class.getName());
                 } catch (final CodecException e) {
                     LOG.error("Fail to decode IncrementAndGetRequest", e);
                 }
@@ -66,21 +67,19 @@ public class SqliteStateMachine extends StateMachineAdapter {
             if (sqliteOperation != null) {
                 switch (sqliteOperation.getOp()) {
                     case SqliteOperation.GET:
-                        ResultSet rs = SqliteHelper.get(sqliteOperation.getSql());
+                        CompletableFuture<Optional<String>> rs = SqliteHelper.asyncGet(sqliteOperation.getKV());
                         try {
-                            while (rs.next()) {
-                                System.out.println("id = " + rs.getInt("id"));
-                            }
+                            System.out.println(rs.get());
                         } catch (Exception ex) {
 
                         }
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
                     case SqliteOperation.SET:
-                        SqliteHelper.put(sqliteOperation.getSql());
+                        SqliteHelper.asyncPut(sqliteOperation.getKV());
                         break;
                     case SqliteOperation.DEL:
-                        SqliteHelper.del(sqliteOperation.getSql());
+                        SqliteHelper.asyncDel(sqliteOperation.getKV());
                         break;
                 }
 
@@ -94,21 +93,21 @@ public class SqliteStateMachine extends StateMachineAdapter {
     }
 
     @Override
-  public void onSnapshotSave(final SnapshotWriter writer, final Closure done) {
-    final long currVal = this.value.get();
-    Utils.runInThread(() -> {
-      final SqliteSnapshotFile snapshot = new SqliteSnapshotFile(writer.getPath() + File.separator + "data");
-      if (snapshot.save(currVal)) {
-        if (writer.addFile("data")) {
-          done.run(Status.OK());
-        } else {
-          done.run(new Status(RaftError.EIO, "Fail to add file to writer"));
-        }
-      } else {
-        done.run(new Status(RaftError.EIO, "Fail to save counter snapshot %s", snapshot.getPath()));
-      }
-    });
-  }
+    public void onSnapshotSave(final SnapshotWriter writer, final Closure done) {
+        final long currVal = this.value.get();
+        Utils.runInThread(() -> {
+            final SqliteSnapshotFile snapshot = new SqliteSnapshotFile(writer.getPath() + File.separator + "data");
+            if (snapshot.save(currVal)) {
+                if (writer.addFile("data")) {
+                    done.run(Status.OK());
+                } else {
+                    done.run(new Status(RaftError.EIO, "Fail to add file to writer"));
+                }
+            } else {
+                done.run(new Status(RaftError.EIO, "Fail to save counter snapshot %s", snapshot.getPath()));
+            }
+        });
+    }
 
     @Override
     public void onError(final RaftException e) {

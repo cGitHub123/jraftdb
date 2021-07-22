@@ -1,6 +1,7 @@
 package raft;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * author caibin@58.com
@@ -20,11 +21,13 @@ public class SqliteOperation implements Serializable {
 
     private String sql;
 
+    private Params KV;
+
     public static SqliteOperation createGet() {
         return new SqliteOperation(GET);
     }
 
-    public static SqliteOperation createIncrement() {
+    public static SqliteOperation createSet() {
         return new SqliteOperation(SET);
     }
 
@@ -50,5 +53,36 @@ public class SqliteOperation implements Serializable {
 
     public void setSql(String sql) {
         this.sql = sql;
+    }
+
+    public Params getKV() {
+        return KV;
+    }
+
+    public void setKV(Params KV) {
+        this.KV = KV;
+    }
+
+    public class Params {
+
+        private String k;
+
+        private String v;
+
+        public String getK() {
+            return k;
+        }
+
+        public void setK(String k) {
+            this.k = k;
+        }
+
+        public String getV() {
+            return v;
+        }
+
+        public void setV(String v) {
+            this.v = v;
+        }
     }
 }

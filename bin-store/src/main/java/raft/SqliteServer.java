@@ -90,7 +90,6 @@ public class SqliteServer {
         final String groupId = args[1];
         final String serverIdStr = args[2];
         final String initConfStr = args[3];
-        SqliteHelper.db = args[4];
         final NodeOptions nodeOptions = new NodeOptions();
         // 为了测试,调整 snapshot 间隔等参数
         // 设置选举超时时间为 1 秒

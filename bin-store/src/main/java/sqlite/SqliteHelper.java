@@ -1,6 +1,13 @@
 package sqlite;
 
+import api.core.AsyncKVStore;
+import api.core.RocksDBConfiguration;
+import raft.SqliteOperation;
+
 import java.sql.*;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * author caibin@58.com
@@ -8,66 +15,31 @@ import java.sql.*;
  */
 public class SqliteHelper {
 
-    public static String db;
+    public static void asyncPut(SqliteOperation.Params kv) {
+        final RocksDBConfiguration rocksDBConfiguration = new RocksDBConfiguration("/src/main/resources/data/repositories", "db");
+        final ItemRepository itemRepository = new ItemRepository(rocksDBConfiguration);
+        itemRepository.save(kv.getK(), kv.getV());
+    }
 
-    public static void put(String sql) {
-        Connection connection = null;
-        try {
-            // create a database connection
-            connection = DriverManager.getConnection(db);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            statement.executeUpdate(sql);
-        } catch (Exception ex) {
+    public static CompletableFuture<Optional<String>> asyncGet(SqliteOperation.Params kv) {
+        final RocksDBConfiguration rocksDBConfiguration = new RocksDBConfiguration("/src/main/resources/data/repositories", "db");
+        final ItemRepository itemRepository = new ItemRepository(rocksDBConfiguration);
+        return itemRepository.findByKey(kv.getK());
+    }
 
-        } finally {
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException e) {
-                // connection close failed.
-                System.err.println(e.getMessage());
-            }
+    public static void asyncDel(SqliteOperation.Params kv) {
+        final RocksDBConfiguration rocksDBConfiguration = new RocksDBConfiguration("/src/main/resources/data/repositories", "db");
+        final ItemRepository itemRepository = new ItemRepository(rocksDBConfiguration);
+        itemRepository.deleteByKey(kv.getK());
+    }
+
+    public static class ItemRepository extends AsyncKVStore<String, String> {
+
+        public ItemRepository(final RocksDBConfiguration configuration) {
+            super(configuration);
         }
     }
 
-    public static ResultSet get(String sql) {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(db);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            return statement.executeQuery(sql);
-        } catch (Exception ex) {
-            return null;
-        } finally {
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException e) {
-                // connection close failed.
-                System.err.println(e.getMessage());
-            }
-        }
-    }
-
-    public static ResultSet del(String sql) {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(db);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            return statement.executeQuery(sql);
-        } catch (Exception ex) {
-            return null;
-        } finally {
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException e) {
-                // connection close failed.
-                System.err.println(e.getMessage());
-            }
-        }
-    }
 }
+
+

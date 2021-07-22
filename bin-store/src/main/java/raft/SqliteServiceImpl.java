@@ -21,6 +21,7 @@ import java.util.concurrent.Executor;
  * date 2021-06-15
  */
 public class SqliteServiceImpl implements SqliteService {
+
     private static final Logger LOG = LoggerFactory.getLogger(SqliteServiceImpl.class);
 
     private final SqliteServer sqliteServer;
@@ -83,7 +84,7 @@ public class SqliteServiceImpl implements SqliteService {
                 SqliteServiceImpl.this.readIndexExecutor.execute(() -> {
                     if(isLeader()){
                         LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
-                        applyOperation(SqliteOperation.createGet(), closure);
+                        applyOperation(SqliteOperation.createDel(), closure);
                     }else {
                         handlerNotLeaderError(closure);
                     }
@@ -106,7 +107,7 @@ public class SqliteServiceImpl implements SqliteService {
 
     @Override
     public void put(final SqliteClosure closure) {
-        applyOperation(SqliteOperation.createIncrement(), closure);
+        applyOperation(SqliteOperation.createSet(), closure);
     }
 
     private void applyOperation(final SqliteOperation op, final SqliteClosure closure) {
