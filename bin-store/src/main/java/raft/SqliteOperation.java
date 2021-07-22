@@ -17,7 +17,7 @@ public class SqliteOperation implements Serializable {
     public static final byte  DEL        = 0x03;
 
     private byte              op;
-    
+
     private String sql;
 
     public static SqliteOperation createGet() {

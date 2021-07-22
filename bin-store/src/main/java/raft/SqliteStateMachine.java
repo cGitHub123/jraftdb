@@ -66,7 +66,7 @@ public class SqliteStateMachine extends StateMachineAdapter {
             if (sqliteOperation != null) {
                 switch (sqliteOperation.getOp()) {
                     case SqliteOperation.GET:
-                        ResultSet rs = SqliteHelper.query(sqliteOperation.getSql());
+                        ResultSet rs = SqliteHelper.get(sqliteOperation.getSql());
                         try {
                             while (rs.next()) {
                                 System.out.println("id = " + rs.getInt("id"));
@@ -77,7 +77,10 @@ public class SqliteStateMachine extends StateMachineAdapter {
                         LOG.info("Get value={} at logIndex={}", current, iter.getIndex());
                         break;
                     case SqliteOperation.SET:
-                        SqliteHelper.execute(sqliteOperation.getSql());
+                        SqliteHelper.put(sqliteOperation.getSql());
+                        break;
+                    case SqliteOperation.DEL:
+                        SqliteHelper.del(sqliteOperation.getSql());
                         break;
                 }
 

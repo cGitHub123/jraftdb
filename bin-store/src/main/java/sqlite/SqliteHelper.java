@@ -10,7 +10,7 @@ public class SqliteHelper {
 
     public static String db;
 
-    public static void execute(String sql) {
+    public static void put(String sql) {
         Connection connection = null;
         try {
             // create a database connection
@@ -31,7 +31,27 @@ public class SqliteHelper {
         }
     }
 
-    public static ResultSet query(String sql) {
+    public static ResultSet get(String sql) {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(db);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            return statement.executeQuery(sql);
+        } catch (Exception ex) {
+            return null;
+        } finally {
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
+    public static ResultSet del(String sql) {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(db);
