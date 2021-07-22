@@ -62,7 +62,7 @@ public class SqliteServiceImpl implements SqliteService {
                         params.setK(request.getSql().split("\\s+")[1]);
                         sqliteOperation.setKV(params);
                         LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
-                        applyOperation(SqliteOperation.createGet(), closure);
+                        applyOperation(sqliteOperation, closure);
                     } else {
                         handlerNotLeaderError(closure);
                     }
