@@ -14,7 +14,10 @@ public class SqliteOperation implements Serializable {
 
     public static final byte  SET        = 0x02;
 
+    public static final byte  DEL        = 0x03;
+
     private byte              op;
+    
     private String sql;
 
     public static SqliteOperation createGet() {
@@ -23,6 +26,10 @@ public class SqliteOperation implements Serializable {
 
     public static SqliteOperation createIncrement() {
         return new SqliteOperation(SET);
+    }
+
+    public static SqliteOperation createDel() {
+        return new SqliteOperation(DEL);
     }
 
     public SqliteOperation(byte op) {

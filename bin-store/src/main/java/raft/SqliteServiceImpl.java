@@ -64,6 +64,34 @@ public class SqliteServiceImpl implements SqliteService {
         });
     }
 
+    @Override
+    public void del(final boolean readOnlySafe, final SqliteClosure closure) {
+        if(!readOnlySafe){
+            closure.success(getValue());
+            closure.run(Status.OK());
+            return;
+        }
+
+        this.sqliteServer.getNode().readIndex(BytesUtil.EMPTY_BYTES, new ReadIndexClosure() {
+            @Override
+            public void run(Status status, long index, byte[] reqCtx) {
+                if(status.isOk()){
+                    closure.success(getValue());
+                    closure.run(Status.OK());
+                    return;
+                }
+                SqliteServiceImpl.this.readIndexExecutor.execute(() -> {
+                    if(isLeader()){
+                        LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
+                        applyOperation(SqliteOperation.createGet(), closure);
+                    }else {
+                        handlerNotLeaderError(closure);
+                    }
+                });
+            }
+        });
+    }
+
     private boolean isLeader() {
         return this.sqliteServer.getFsm().isLeader();
     }

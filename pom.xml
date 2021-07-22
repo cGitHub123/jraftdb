@@ -16,7 +16,6 @@
         <module>bin-store</module>
         <module>bin-metadata</module>
         <module>bin-jdbc</module>
-
     </modules>
 
     <properties>

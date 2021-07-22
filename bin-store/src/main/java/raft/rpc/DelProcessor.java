@@ -29,7 +29,7 @@ public class DelProcessor implements RpcProcessor<DelRequest> {
                 rpcCtx.sendResponse(getValueResponse());
             }
         };
-        this.sqliteService.get(request.isReadOnlySafe(), closure);
+        this.sqliteService.del(request.isReadOnlySafe(), closure);
     }
 
     @Override
