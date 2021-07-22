@@ -25,7 +25,7 @@ public class SqliteServiceImpl implements SqliteService {
     private static final Logger LOG = LoggerFactory.getLogger(SqliteServiceImpl.class);
 
     private final SqliteServer sqliteServer;
-    private final Executor      readIndexExecutor;
+    private final Executor readIndexExecutor;
 
     public SqliteServiceImpl(SqliteServer sqliteServer) {
         this.sqliteServer = sqliteServer;
@@ -39,7 +39,7 @@ public class SqliteServiceImpl implements SqliteService {
 
     @Override
     public void get(final boolean readOnlySafe, final SqliteClosure closure) {
-        if(!readOnlySafe){
+        if (!readOnlySafe) {
             closure.success(getValue());
             closure.run(Status.OK());
             return;
@@ -48,16 +48,16 @@ public class SqliteServiceImpl implements SqliteService {
         this.sqliteServer.getNode().readIndex(BytesUtil.EMPTY_BYTES, new ReadIndexClosure() {
             @Override
             public void run(Status status, long index, byte[] reqCtx) {
-                if(status.isOk()){
+                if (status.isOk()) {
                     closure.success(getValue());
                     closure.run(Status.OK());
                     return;
                 }
                 SqliteServiceImpl.this.readIndexExecutor.execute(() -> {
-                    if(isLeader()){
+                    if (isLeader()) {
                         LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
                         applyOperation(SqliteOperation.createGet(), closure);
-                    }else {
+                    } else {
                         handlerNotLeaderError(closure);
                     }
                 });
@@ -67,7 +67,7 @@ public class SqliteServiceImpl implements SqliteService {
 
     @Override
     public void del(final boolean readOnlySafe, final SqliteClosure closure) {
-        if(!readOnlySafe){
+        if (!readOnlySafe) {
             closure.success(getValue());
             closure.run(Status.OK());
             return;
@@ -76,16 +76,16 @@ public class SqliteServiceImpl implements SqliteService {
         this.sqliteServer.getNode().readIndex(BytesUtil.EMPTY_BYTES, new ReadIndexClosure() {
             @Override
             public void run(Status status, long index, byte[] reqCtx) {
-                if(status.isOk()){
+                if (status.isOk()) {
                     closure.success(getValue());
                     closure.run(Status.OK());
                     return;
                 }
                 SqliteServiceImpl.this.readIndexExecutor.execute(() -> {
-                    if(isLeader()){
+                    if (isLeader()) {
                         LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
                         applyOperation(SqliteOperation.createDel(), closure);
-                    }else {
+                    } else {
                         handlerNotLeaderError(closure);
                     }
                 });
