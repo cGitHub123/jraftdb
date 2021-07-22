@@ -9,6 +9,7 @@ import com.alipay.sofa.jraft.error.RaftError;
 import com.alipay.sofa.jraft.rhea.StoreEngineHelper;
 import com.alipay.sofa.jraft.rhea.options.StoreEngineOptions;
 import com.alipay.sofa.jraft.util.BytesUtil;
+import module.GetRequest;
 import module.PutRequest;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class SqliteServiceImpl implements SqliteService {
     }
 
     @Override
-    public void get(final boolean readOnlySafe, final SqliteClosure closure) {
+    public void get(final boolean readOnlySafe, final SqliteClosure closure, GetRequest request) {
         if (!readOnlySafe) {
             closure.success(getValue());
             closure.run(Status.OK());
@@ -56,6 +57,10 @@ public class SqliteServiceImpl implements SqliteService {
                 }
                 SqliteServiceImpl.this.readIndexExecutor.execute(() -> {
                     if (isLeader()) {
+                        SqliteOperation sqliteOperation = SqliteOperation.createGet();
+                        Params params = new Params();
+                        params.setK(request.getSql().split("\\s+")[1]);
+                        sqliteOperation.setKV(params);
                         LOG.debug("Fail to get value with 'ReadIndex': {}, try to applying to the state machine.", status);
                         applyOperation(SqliteOperation.createGet(), closure);
                     } else {

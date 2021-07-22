@@ -12,11 +12,21 @@ public class GetRequest implements Serializable {
 
     private boolean           readOnlySafe     = true;
 
+    private String sql;
+
     public boolean isReadOnlySafe() {
         return readOnlySafe;
     }
 
     public void setReadOnlySafe(boolean readOnlySafe) {
         this.readOnlySafe = readOnlySafe;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 }
