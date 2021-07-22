@@ -9,6 +9,7 @@ import com.alipay.sofa.jraft.error.RaftError;
 import com.alipay.sofa.jraft.rhea.StoreEngineHelper;
 import com.alipay.sofa.jraft.rhea.options.StoreEngineOptions;
 import com.alipay.sofa.jraft.util.BytesUtil;
+import module.PutRequest;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,8 +107,13 @@ public class SqliteServiceImpl implements SqliteService {
     }
 
     @Override
-    public void put(final SqliteClosure closure) {
-        applyOperation(SqliteOperation.createSet(), closure);
+    public void put(final SqliteClosure closure, PutRequest request) {
+        SqliteOperation sqliteOperation = SqliteOperation.createSet();
+        Params params = new Params();
+        params.setK(request.getSql().split("\\s+")[1]);
+        params.setV(request.getSql().split("\\s+")[2]);
+        sqliteOperation.setKV(params);
+        applyOperation(sqliteOperation, closure);
     }
 
     private void applyOperation(final SqliteOperation op, final SqliteClosure closure) {

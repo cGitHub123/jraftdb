@@ -29,7 +29,7 @@ public class PutProcessor implements RpcProcessor<PutRequest> {
             }
         };
 
-        this.sqliteService.put(closure);
+        this.sqliteService.put(closure, request);
     }
 
     @Override
