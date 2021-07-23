@@ -9,6 +9,7 @@ import com.alipay.sofa.jraft.option.NodeOptions;
 import com.alipay.sofa.jraft.rpc.RaftRpcServerFactory;
 import com.alipay.sofa.jraft.rpc.RpcServer;
 import org.apache.commons.io.FileUtils;
+import raft.rpc.DelProcessor;
 import raft.rpc.PutProcessor;
 import raft.rpc.GetProcessor;
 import raft.rpc.ValueResponse;
@@ -38,6 +39,7 @@ public class SqliteServer {
         SqliteService sqliteService = new SqliteServiceImpl(this);
         rpcServer.registerProcessor(new GetProcessor(sqliteService));
         rpcServer.registerProcessor(new PutProcessor(sqliteService));
+        rpcServer.registerProcessor(new DelProcessor(sqliteService));
         // 初始化状态机
         this.fsm = new SqliteStateMachine();
         // 设置状态机到启动参数
@@ -83,7 +85,7 @@ public class SqliteServer {
     }
 
     public static void main(final String[] args) throws IOException {
-        if (args.length != 5) {
+        if (args.length != 6) {
             System.out.println("args is not 5");
             System.exit(1);
         }
@@ -91,7 +93,8 @@ public class SqliteServer {
         final String groupId = args[1];
         final String serverIdStr = args[2];
         final String initConfStr = args[3];
-        SqliteHelper.rocksDBConfiguration = new RocksDBConfiguration(args[4], "db");
+        final String dbname = args[5];
+        SqliteHelper.rocksDBConfiguration = new RocksDBConfiguration(args[4], dbname);
         final NodeOptions nodeOptions = new NodeOptions();
         // 为了测试,调整 snapshot 间隔等参数
         // 设置选举超时时间为 1 秒

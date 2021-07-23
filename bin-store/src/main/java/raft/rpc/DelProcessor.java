@@ -34,7 +34,7 @@ public class DelProcessor implements RpcProcessor<DelRequest> {
 
     @Override
     public String interest() {
-        return GetRequest.class.getName();
+        return DelRequest.class.getName();
     }
 
 }

@@ -1,10 +1,14 @@
 package raft;
 
+import java.io.Serializable;
+
 /**
  * @Author: caibin
  * @Date: 2021/7/23
  */
-public class Params {
+public class Params implements Serializable {
+
+    private static final long serialVersionUID = 9218253805002988801L;
 
     private String k;
 

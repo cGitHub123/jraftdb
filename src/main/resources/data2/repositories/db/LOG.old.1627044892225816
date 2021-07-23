@@ -1,0 +1,84 @@
+2021/07/23-13:46:35.370231 7fc3fdffb700 RocksDB version: 5.18.4
+2021/07/23-13:46:35.370266 7fc3fdffb700 Git sha rocksdb_build_git_sha:
+2021/07/23-13:46:35.370268 7fc3fdffb700 Compile date Mar 11 2020
+2021/07/23-13:46:35.370270 7fc3fdffb700 DB SUMMARY
+2021/07/23-13:46:35.370294 7fc3fdffb700 CURRENT file:  CURRENT
+2021/07/23-13:46:35.370296 7fc3fdffb700 IDENTITY file:  IDENTITY
+2021/07/23-13:46:35.370298 7fc3fdffb700 MANIFEST file:  MANIFEST-000001 size: 13 Bytes
+2021/07/23-13:46:35.370300 7fc3fdffb700 SST files in /home/caibin/my/jraftdb/src/main/resources/data2/repositories/db dir, Total Num: 0, files: 
+2021/07/23-13:46:35.370301 7fc3fdffb700 Write Ahead Log file in /home/caibin/my/jraftdb/src/main/resources/data2/repositories/db: 000003.log size: 0 ; 
+2021/07/23-13:46:35.370303 7fc3fdffb700                         Options.error_if_exists: 0
+2021/07/23-13:46:35.370304 7fc3fdffb700                       Options.create_if_missing: 1
+2021/07/23-13:46:35.370305 7fc3fdffb700                         Options.paranoid_checks: 1
+2021/07/23-13:46:35.370306 7fc3fdffb700                                     Options.env: 0x7fc45dcf6fa0
+2021/07/23-13:46:35.370307 7fc3fdffb700                                Options.info_log: 0x7fc3c418be60
+2021/07/23-13:46:35.370308 7fc3fdffb700                Options.max_file_opening_threads: 16
+2021/07/23-13:46:35.370309 7fc3fdffb700                              Options.statistics: (nil)
+2021/07/23-13:46:35.370310 7fc3fdffb700                               Options.use_fsync: 0
+2021/07/23-13:46:35.370311 7fc3fdffb700                       Options.max_log_file_size: 0
+2021/07/23-13:46:35.370312 7fc3fdffb700                  Options.max_manifest_file_size: 1073741824
+2021/07/23-13:46:35.370313 7fc3fdffb700                   Options.log_file_time_to_roll: 0
+2021/07/23-13:46:35.370314 7fc3fdffb700                       Options.keep_log_file_num: 1000
+2021/07/23-13:46:35.370315 7fc3fdffb700                    Options.recycle_log_file_num: 0
+2021/07/23-13:46:35.370316 7fc3fdffb700                         Options.allow_fallocate: 1
+2021/07/23-13:46:35.370317 7fc3fdffb700                        Options.allow_mmap_reads: 0
+2021/07/23-13:46:35.370318 7fc3fdffb700                       Options.allow_mmap_writes: 0
+2021/07/23-13:46:35.370319 7fc3fdffb700                        Options.use_direct_reads: 0
+2021/07/23-13:46:35.370320 7fc3fdffb700                        Options.use_direct_io_for_flush_and_compaction: 0
+2021/07/23-13:46:35.370321 7fc3fdffb700          Options.create_missing_column_families: 0
+2021/07/23-13:46:35.370322 7fc3fdffb700                              Options.db_log_dir: 
+2021/07/23-13:46:35.370323 7fc3fdffb700                                 Options.wal_dir: /home/caibin/my/jraftdb/src/main/resources/data2/repositories/db
+2021/07/23-13:46:35.370324 7fc3fdffb700                Options.table_cache_numshardbits: 6
+2021/07/23-13:46:35.370325 7fc3fdffb700                      Options.max_subcompactions: 1
+2021/07/23-13:46:35.370326 7fc3fdffb700                  Options.max_background_flushes: -1
+2021/07/23-13:46:35.370327 7fc3fdffb700                         Options.WAL_ttl_seconds: 0
+2021/07/23-13:46:35.370327 7fc3fdffb700                       Options.WAL_size_limit_MB: 0
+2021/07/23-13:46:35.370328 7fc3fdffb700             Options.manifest_preallocation_size: 4194304
+2021/07/23-13:46:35.370329 7fc3fdffb700                     Options.is_fd_close_on_exec: 1
+2021/07/23-13:46:35.370330 7fc3fdffb700                   Options.advise_random_on_open: 1
+2021/07/23-13:46:35.370331 7fc3fdffb700                    Options.db_write_buffer_size: 0
+2021/07/23-13:46:35.370332 7fc3fdffb700                    Options.write_buffer_manager: 0x7fc3c418ace0
+2021/07/23-13:46:35.370333 7fc3fdffb700         Options.access_hint_on_compaction_start: 1
+2021/07/23-13:46:35.370334 7fc3fdffb700  Options.new_table_reader_for_compaction_inputs: 0
+2021/07/23-13:46:35.370335 7fc3fdffb700           Options.random_access_max_buffer_size: 1048576
+2021/07/23-13:46:35.370335 7fc3fdffb700                      Options.use_adaptive_mutex: 0
+2021/07/23-13:46:35.370336 7fc3fdffb700                            Options.rate_limiter: (nil)
+2021/07/23-13:46:35.370346 7fc3fdffb700     Options.sst_file_manager.rate_bytes_per_sec: 0
+2021/07/23-13:46:35.370348 7fc3fdffb700                       Options.wal_recovery_mode: 2
+2021/07/23-13:46:35.370348 7fc3fdffb700                  Options.enable_thread_tracking: 0
+2021/07/23-13:46:35.370349 7fc3fdffb700                  Options.enable_pipelined_write: 0
+2021/07/23-13:46:35.370350 7fc3fdffb700         Options.allow_concurrent_memtable_write: 1
+2021/07/23-13:46:35.370351 7fc3fdffb700      Options.enable_write_thread_adaptive_yield: 1
+2021/07/23-13:46:35.370351 7fc3fdffb700             Options.write_thread_max_yield_usec: 100
+2021/07/23-13:46:35.370352 7fc3fdffb700            Options.write_thread_slow_yield_usec: 3
+2021/07/23-13:46:35.370353 7fc3fdffb700                               Options.row_cache: None
+2021/07/23-13:46:35.370354 7fc3fdffb700                              Options.wal_filter: None
+2021/07/23-13:46:35.370355 7fc3fdffb700             Options.avoid_flush_during_recovery: 0
+2021/07/23-13:46:35.370356 7fc3fdffb700             Options.allow_ingest_behind: 0
+2021/07/23-13:46:35.370357 7fc3fdffb700             Options.preserve_deletes: 0
+2021/07/23-13:46:35.370357 7fc3fdffb700             Options.two_write_queues: 0
+2021/07/23-13:46:35.370358 7fc3fdffb700             Options.manual_wal_flush: 0
+2021/07/23-13:46:35.370359 7fc3fdffb700             Options.max_background_jobs: 2
+2021/07/23-13:46:35.370360 7fc3fdffb700             Options.max_background_compactions: -1
+2021/07/23-13:46:35.370361 7fc3fdffb700             Options.avoid_flush_during_shutdown: 0
+2021/07/23-13:46:35.370362 7fc3fdffb700           Options.writable_file_max_buffer_size: 1048576
+2021/07/23-13:46:35.370362 7fc3fdffb700             Options.delayed_write_rate : 16777216
+2021/07/23-13:46:35.370363 7fc3fdffb700             Options.max_total_wal_size: 0
+2021/07/23-13:46:35.370364 7fc3fdffb700             Options.delete_obsolete_files_period_micros: 21600000000
+2021/07/23-13:46:35.370365 7fc3fdffb700                   Options.stats_dump_period_sec: 600
+2021/07/23-13:46:35.370366 7fc3fdffb700                          Options.max_open_files: -1
+2021/07/23-13:46:35.370367 7fc3fdffb700                          Options.bytes_per_sync: 0
+2021/07/23-13:46:35.370368 7fc3fdffb700                      Options.wal_bytes_per_sync: 0
+2021/07/23-13:46:35.370369 7fc3fdffb700       Options.compaction_readahead_size: 0
+2021/07/23-13:46:35.370369 7fc3fdffb700 Compression algorithms supported:
+2021/07/23-13:46:35.370371 7fc3fdffb700 	kZSTDNotFinalCompression supported: 1
+2021/07/23-13:46:35.370372 7fc3fdffb700 	kZSTD supported: 1
+2021/07/23-13:46:35.370373 7fc3fdffb700 	kXpressCompression supported: 0
+2021/07/23-13:46:35.370374 7fc3fdffb700 	kLZ4HCCompression supported: 1
+2021/07/23-13:46:35.370375 7fc3fdffb700 	kLZ4Compression supported: 1
+2021/07/23-13:46:35.370376 7fc3fdffb700 	kBZip2Compression supported: 1
+2021/07/23-13:46:35.370377 7fc3fdffb700 	kZlibCompression supported: 1
+2021/07/23-13:46:35.370377 7fc3fdffb700 	kSnappyCompression supported: 1
+2021/07/23-13:46:35.370379 7fc3fdffb700 Fast CRC32 supported: Not supported on x86
+2021/07/23-13:46:35.370410 7fc3fdffb700 [/db_impl.cc:388] Shutdown: canceling all background work
+2021/07/23-13:46:35.370434 7fc3fdffb700 [/db_impl.cc:562] Shutdown complete
