@@ -1,5 +1,6 @@
 package raft;
 
+import module.DelRequest;
 import module.GetRequest;
 import module.PutRequest;
 
@@ -9,7 +10,7 @@ import module.PutRequest;
  */
 public interface SqliteService {
 
-    void del(final boolean readOnlySafe, final SqliteClosure closure);
+    void del(final boolean readOnlySafe, final SqliteClosure closure, DelRequest request);
 
     void get(final boolean readOnlySafe, final SqliteClosure closure, GetRequest request);
 
