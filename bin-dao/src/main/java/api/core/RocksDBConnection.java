@@ -22,17 +22,18 @@ public abstract class RocksDBConnection {
 
     public RocksDBConnection(final RocksDBConfiguration configuration) {
         RocksDB.loadLibrary();
-
+        final Options options = new Options().setCreateIfMissing(true);
+        options.setMaxFileOpeningThreads(3);
+        final String root = System.getProperty("user.dir");
+        final String rocksDirectory = root + configuration.url();
+        final Path path = Paths.get(rocksDirectory);
         try {
-            final Options options = new Options().setCreateIfMissing(true);
-            final String root = System.getProperty("user.dir");
-            final String rocksDirectory = root + configuration.url();
-            final Path path = Paths.get(rocksDirectory);
             createDirectories(path);
             rocksDB = RocksDB.open(options, path.toString());
         } catch (final Exception exception) {
-            LOGGER.error("Exception occurred during RocksDB initialization. Shutting down application...");
+            LOGGER.error("Exception occurred during RocksDB initialization. Shutting down application...", exception);
             System.exit(1);
         }
+
     }
 }

@@ -85,7 +85,7 @@ public class SqliteServer {
     }
 
     public static void main(final String[] args) throws IOException {
-        if (args.length != 6) {
+        if (args.length != 5) {
             System.out.println("args is not 5");
             System.exit(1);
         }
@@ -93,8 +93,7 @@ public class SqliteServer {
         final String groupId = args[1];
         final String serverIdStr = args[2];
         final String initConfStr = args[3];
-        final String dbname = args[5];
-        SqliteHelper.rocksDBConfiguration = new RocksDBConfiguration(args[4], dbname);
+        SqliteHelper.rocksDBConfiguration = new RocksDBConfiguration(args[4], "db");
         final NodeOptions nodeOptions = new NodeOptions();
         // 为了测试,调整 snapshot 间隔等参数
         // 设置选举超时时间为 1 秒
